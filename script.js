@@ -65,3 +65,8 @@ function importData() {
         reader.readAsText(file);
     }
 }
+
+function clearWorkoutLog() {
+    localStorage.removeItem("workoutLog");
+    loadExercises();
+}
