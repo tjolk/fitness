@@ -1,0 +1,13 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Open Fitness Schedule in Browser",
+      "type": "shell",
+      "command": "start microsoft-edge:index.html",
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}
