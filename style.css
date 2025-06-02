@@ -17,19 +17,21 @@ body {
     font-family: 'Sofia Pro', Arial, sans-serif;
     text-align: center;
     background: #1c55a4;
-    color: #fff;
+    color: #000;
 }
 
-h1, h2, h3, h4, h5, h6, th {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Ink Free', cursive, sans-serif;
   color: #ffd500;
+  text-align: left;
+  margin-left: 0.5em;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-    background: #224e8c;
+    background: #fff;
 }
 
 th, td {
@@ -38,8 +40,9 @@ th, td {
 }
 
 th {
-    background-color: #333;
+    background-color: #ffd500;
     color: #fff;
+    font-family: 'Ink Free', cursive, sans-serif;
 }
 
 button {
@@ -54,10 +57,13 @@ button {
     font-weight: bold;
 }
 
-input, select {
+input[type="text"], input[type="number"], select {
     font-family: 'Sofia Pro', Arial, sans-serif;
     font-size: 1em;
-    padding: 5px;
+    padding: 2px 4px;
     border-radius: 3px;
     border: 1px solid #ccc;
+    width: 60px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
