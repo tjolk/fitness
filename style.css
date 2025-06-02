@@ -1,7 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Ink+Free&display=swap');
+@font-face {
+  font-family: 'Sofia Pro';
+  src: local('Sofia Pro'), local('SofiaPro');
+  font-display: swap;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Sofia Pro', Arial, sans-serif;
     text-align: center;
-    background-color: #f8f8f8;
+    background-color: #1c55a4;
+}
+
+h1, h2, h3, h4, h5, h6, th {
+  font-family: 'Ink Free', cursive, sans-serif;
 }
 
 table {
