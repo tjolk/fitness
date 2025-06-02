@@ -24,7 +24,6 @@ const defaultWorkout = [
     { nummer: 16, oefening: "Adductor Machine", gewicht: 20, herhalingen: 15 }
 ];
 
-// Update loadExercises to use native <input type="number"> for all number fields for a native-like wheel experience
 const loadExercises = () => {
     let workoutData = getWorkoutData();
     if (!workoutData.length) {
@@ -34,13 +33,12 @@ const loadExercises = () => {
     const tableBody = document.querySelector("#workoutTable tbody");
     tableBody.innerHTML = "";
     workoutData.forEach((exercise, index) => {
-        // Picker wheel for gewicht: increments of 5, 0-100 (except 57/58 and row 7)
+        // Gewicht picker
         const gewichtInput = document.createElement('span');
         const gewichtSelect = document.createElement('select');
         gewichtSelect.className = 'gewicht-wheel';
         if (exercise.nummer == 57 || exercise.nummer == 58) {
             for (let v = 0; v <= 50; v += 2.5) {
-                // Fix floating point precision for display
                 const displayVal = (Math.round(v * 10) / 10).toFixed(1).replace('.0', '');
                 const option = document.createElement('option');
                 option.value = v;
@@ -48,7 +46,7 @@ const loadExercises = () => {
                 if (Number(v) === Number(exercise.gewicht)) option.selected = true;
                 gewichtSelect.appendChild(option);
             }
-        } else if (index === 6) { // row 7 (0-based)
+        } else if (index === 6) {
             for (let v = 0; v <= 100; v += 10) {
                 const option = document.createElement('option');
                 option.value = v;
@@ -68,9 +66,9 @@ const loadExercises = () => {
         gewichtSelect.onchange = e => updateExercise(index, 'gewicht', e.target.value);
         gewichtInput.appendChild(gewichtSelect);
 
+        // Herhalingen picker
         let herhalingenInput = document.createElement('span');
         if (index < 6) {
-            // Picker wheel for first 6 rows: increments of 4, 12-32
             const select = document.createElement('select');
             select.className = 'herhalingen-wheel';
             for (let v = 12; v <= 32; v += 4) {
@@ -83,7 +81,6 @@ const loadExercises = () => {
             select.onchange = e => updateExercise(index, 'herhalingen', e.target.value);
             herhalingenInput.appendChild(select);
         } else if (index >= workoutData.length - 4) {
-            // Picker wheel for last 4 rows: increments of 5, 10-25
             const select = document.createElement('select');
             select.className = 'herhalingen-wheel';
             for (let v = 10; v <= 25; v += 5) {
@@ -96,7 +93,6 @@ const loadExercises = () => {
             select.onchange = e => updateExercise(index, 'herhalingen', e.target.value);
             herhalingenInput.appendChild(select);
         } else {
-            // Default input for other rows (as DOM, not string)
             const input = document.createElement('input');
             input.type = 'number';
             input.min = '0';
@@ -113,6 +109,8 @@ const loadExercises = () => {
             unit.textContent = ' x';
             herhalingenInput.appendChild(unit);
         }
+
+        // Table row
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${exercise.nummer || ''}</td>
@@ -145,7 +143,6 @@ const defaultCardio = [
     { type: "Cardio", oefening: "Loopband", duur: 0 }
 ];
 
-// Update loadCardio to use native <input type="number"> for all number fields for a native-like wheel experience
 const loadCardio = () => {
     let cardioData = getCardioData();
     if (!cardioData.length) {
@@ -155,7 +152,6 @@ const loadCardio = () => {
     const tableBody = document.querySelector("#cardioTable tbody");
     tableBody.innerHTML = "";
     cardioData.forEach((item, index) => {
-        // Create a select dropdown for duur (0-60, step 5)
         const select = document.createElement('select');
         select.className = 'duur-wheel';
         for (let v = 0; v <= 60; v += 5) {
@@ -199,7 +195,6 @@ const defaultBuik = [
     { oefening: "3x Onderbuik", herhalingen: 10 }
 ];
 
-// Update loadBuik to use native <input type="number"> for all number fields for a native-like wheel experience
 const loadBuik = () => {
     let buikData = getBuikData();
     if (!buikData.length) {
@@ -209,7 +204,6 @@ const loadBuik = () => {
     const tableBody = document.querySelector("#buikTable tbody");
     tableBody.innerHTML = "";
     buikData.forEach((item, index) => {
-        // Create a select dropdown for herhalingen (6-24, step 2)
         const select = document.createElement('select');
         select.className = 'herhalingen-wheel';
         for (let v = 6; v <= 24; v += 2) {

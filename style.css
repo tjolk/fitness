@@ -1,3 +1,4 @@
+/* === Font Faces === */
 @font-face {
   font-family: 'Sofia Pro';
   src: url('./fonts/Sofia Pro Regular Az.woff') format('woff');
@@ -13,11 +14,12 @@
   font-display: swap;
 }
 
+/* === Base Styles === */
 body {
-    font-family: 'Sofia Pro', Arial, sans-serif;
-    text-align: center;
-    background: #1c55a4;
-    color: #000;
+  font-family: 'Sofia Pro', Arial, sans-serif;
+  text-align: center;
+  background: #1c55a4;
+  color: #000;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -27,88 +29,74 @@ h1, h2, h3, h4, h5, h6 {
   margin-left: 0.5em;
 }
 
+/* === Table Layout === */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background: #fff;
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background: #fff;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
 }
 
+/* Header and Column Alignment */
+th {
+  background-color: #ffd500;
+  color: #fff;
+  font-family: 'Ink Free', cursive, sans-serif;
+  text-align: center;
+}
 td, th {
   text-align: left;
 }
-
-/* Center-align all table headers */
-th {
-  text-align: center;
-}
-
-/* Center-align duur and herhalingen columns in all tables */
+/* Center-align picker columns */
 #cardioTable th:nth-child(3), #cardioTable td:nth-child(3),
 #workoutTable th:nth-child(4), #workoutTable td:nth-child(4),
 #buikTable th:nth-child(2), #buikTable td:nth-child(2) {
   text-align: center;
 }
-
-/* Keep # column right-aligned in Krachttraining */
+/* Right-align # column in Krachttraining */
 #workoutTable th:nth-child(1), #workoutTable td:nth-child(1) {
   text-align: right;
 }
-
+/* Center-align gewicht/herhalingen in Krachttraining */
 #workoutTable th:nth-child(3), #workoutTable th:nth-child(4),
 #workoutTable td:nth-child(3), #workoutTable td:nth-child(4) {
   text-align: center;
 }
-#cardioTable th:nth-child(3), #cardioTable td:nth-child(3),
-#buikTable th:nth-child(2), #buikTable td:nth-child(2) {
-  text-align: center;
+
+td:last-child {
+  white-space: nowrap;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-}
-
-th {
-    background-color: #ffd500;
-    color: #fff;
-    font-family: 'Ink Free', cursive, sans-serif;
-}
-
+/* === Button Styles === */
 button {
-    margin: 10px;
-    padding: 10px;
-    cursor: pointer;
-    background: #fff;
-    color: #1c55a4;
-    border: none;
-    border-radius: 5px;
-    font-family: 'Sofia Pro', Arial, sans-serif;
-    font-weight: bold;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  background: #fff;
+  color: #1c55a4;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Sofia Pro', Arial, sans-serif;
+  font-weight: bold;
 }
 
+/* === Input & Picker Styles === */
 input[type="number"], input[type="text"], select {
-    font-family: 'Sofia Pro', Arial, sans-serif;
-    font-size: 1em;
-    padding: 2px 4px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    width: 60px;
-    max-width: 100%;
-    box-sizing: border-box;
+  font-family: 'Sofia Pro', Arial, sans-serif;
+  font-size: 1em;
+  padding: 2px 4px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  width: 60px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-input[type="number"] {
-    width: 40px;
-    margin-right: 2px;
-}
-
-/* Native number input styles for mobile wheel */
-.weight-input-wrapper, .herhalingen-input-wrapper, .duur-input-wrapper {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2em;
-}
+/* Unified number input style for all pickers */
 input[type='number'] {
   font-size: 1em;
   width: 3.5em;
@@ -120,6 +108,7 @@ input[type='number'] {
   text-align: center;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   appearance: textfield;
+  margin-right: 2px;
 }
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
@@ -127,24 +116,45 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
-#cardioTable select {
-    font-size: 1em;
-    padding: 6px 12px;
-    border-radius: 5px;
-    width: 100px;
+/* Picker wheel wrappers */
+.weight-input-wrapper, .herhalingen-input-wrapper, .duur-input-wrapper,
+.number-wheel-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  white-space: nowrap;
 }
 
-td:last-child {
-    white-space: nowrap;
+/* Unified select (picker wheel) styles */
+select, .number-wheel, .duur-wheel, .herhalingen-wheel, .gewicht-wheel {
+  font-size: 1em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.7em;
+  border: 1px solid #ffd500;
+  background: #fffbe6;
+  color: #1c55a4;
+  appearance: none;
+  -webkit-appearance: none;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 
-.weight-input-wrapper {
-    display: inline-flex;
-    align-items: center;
-    white-space: nowrap;
+/* Specific min-widths for different wheels */
+.number-wheel, .herhalingen-wheel { min-width: 4em; }
+.gewicht-wheel { min-width: 4.5em; margin-right: 0.2em; }
+.duur-wheel { min-width: 5em; }
+
+/* CardioTable select width */
+#cardioTable select { width: 100px; }
+
+/* Picker wheel unit label */
+.number-wheel-unit {
+  font-size: 1em;
+  color: #222;
+  margin-left: 0.2em;
 }
 
-/* Mobile-friendly stepper styles */
+/* === Stepper Styles === */
 .stepper-wrapper {
   display: inline-flex;
   align-items: center;
@@ -177,6 +187,8 @@ td:last-child {
   font-family: inherit;
   color: #222;
 }
+
+/* === Responsive Styles === */
 @media (max-width: 600px) {
   .stepper-btn {
     width: 2em;
@@ -187,104 +199,17 @@ td:last-child {
     min-width: 2em;
     font-size: 1em;
   }
-}
-
-/* Compact number wheel styles for mobile */
-.number-wheel-wrapper {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2em;
-}
-.number-wheel {
-  font-size: 1em;
-  padding: 0.2em 0.5em;
-  border-radius: 0.7em;
-  border: 1px solid #ffd500;
-  background: #fffbe6;
-  color: #1c55a4;
-  appearance: none;
-  -webkit-appearance: none;
-  min-width: 3.5em;
-  text-align: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-.number-wheel-unit {
-  font-size: 1em;
-  color: #222;
-  margin-left: 0.2em;
-}
-@media (max-width: 600px) {
-  .number-wheel {
+  .number-wheel, .herhalingen-wheel, .gewicht-wheel {
     font-size: 1em;
     min-width: 2.5em;
     padding: 0.1em 0.2em;
   }
-  .number-wheel-unit {
-    font-size: 0.95em;
-  }
-}
-
-.duur-wheel {
-  font-size: 1em;
-  padding: 0.2em 0.5em;
-  border-radius: 0.7em;
-  border: 1px solid #ffd500;
-  background: #fffbe6;
-  color: #1c55a4;
-  appearance: none;
-  -webkit-appearance: none;
-  min-width: 5em;
-  text-align: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-@media (max-width: 600px) {
   .duur-wheel {
     font-size: 1em;
     min-width: 3.5em;
     padding: 0.1em 0.2em;
   }
-}
-
-.herhalingen-wheel {
-  font-size: 1em;
-  padding: 0.2em 0.5em;
-  border-radius: 0.7em;
-  border: 1px solid #ffd500;
-  background: #fffbe6;
-  color: #1c55a4;
-  appearance: none;
-  -webkit-appearance: none;
-  min-width: 4em;
-  text-align: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  margin-right: 0.2em;
-}
-@media (max-width: 600px) {
-  .herhalingen-wheel {
-    font-size: 1em;
-    min-width: 2.5em;
-    padding: 0.1em 0.2em;
-  }
-}
-
-.gewicht-wheel {
-  font-size: 1em;
-  padding: 0.2em 0.5em;
-  border-radius: 0.7em;
-  border: 1px solid #ffd500;
-  background: #fffbe6;
-  color: #1c55a4;
-  appearance: none;
-  -webkit-appearance: none;
-  min-width: 4.5em;
-  text-align: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  margin-right: 0.2em;
-}
-@media (max-width: 600px) {
-  .gewicht-wheel {
-    font-size: 1em;
-    min-width: 3em;
-    padding: 0.1em 0.2em;
+  .number-wheel-unit {
+    font-size: 0.95em;
   }
 }
