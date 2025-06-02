@@ -1,36 +1,40 @@
-document.addEventListener("DOMContentLoaded", function() {
+// Fitness Schedule App Script
+// Loads and manages Cardio, Krachttraining, and Buik tables with localStorage persistence
+
+document.addEventListener("DOMContentLoaded", () => {
     loadExercises();
     loadCardio();
     loadBuik();
 });
 
-function loadExercises() {
-    let workoutData = JSON.parse(localStorage.getItem("workoutLog"));
-    if (!workoutData || workoutData.length === 0) {
-        workoutData = [
-            { nummer: 75, oefening: "Chest Press", gewicht: 15, herhalingen: 24 },
-            { nummer: 92, oefening: "Lat Machine", gewicht: 20, herhalingen: 24 },
-            { nummer: 94, oefening: "Vertical Traction", gewicht: 20, herhalingen: 24 },
-            { nummer: 74, oefening: "Shoulder Press", gewicht: 10, herhalingen: 24 },
-            { nummer: 58, oefening: "Triceps Press MS", gewicht: 5, herhalingen: 24 },
-            { nummer: 57, oefening: "Biceps Curl MS", gewicht: 5, herhalingen: 24 },
-            { nummer: 7, oefening: "Horizontal Leg Press", gewicht: 60, herhalingen: 15 },
-            { nummer: 13, oefening: "Standing Gluteus (stand 4/5)", gewicht: 25, herhalingen: 15 },
-            { nummer: 15, oefening: "Abductor Machine", gewicht: 20, herhalingen: 15 },
-            { nummer: 16, oefening: "Adductor Machine", gewicht: 20, herhalingen: 15 }
-        ];
-        localStorage.setItem("workoutLog", JSON.stringify(workoutData));
+// --- Krachttraining Table ---
+const getWorkoutData = () => JSON.parse(localStorage.getItem("workoutLog")) || [];
+const setWorkoutData = data => localStorage.setItem("workoutLog", JSON.stringify(data));
+
+const defaultWorkout = [
+    { nummer: 75, oefening: "Chest Press", gewicht: 15, herhalingen: 24 },
+    { nummer: 92, oefening: "Lat Machine", gewicht: 20, herhalingen: 24 },
+    { nummer: 94, oefening: "Vertical Traction", gewicht: 20, herhalingen: 24 },
+    { nummer: 74, oefening: "Shoulder Press", gewicht: 10, herhalingen: 24 },
+    { nummer: 58, oefening: "Triceps Press MS", gewicht: 5, herhalingen: 24 },
+    { nummer: 57, oefening: "Biceps Curl MS", gewicht: 5, herhalingen: 24 },
+    { nummer: 7, oefening: "Horizontal Leg Press", gewicht: 60, herhalingen: 15 },
+    { nummer: 13, oefening: "Standing Gluteus (stand 4/5)", gewicht: 25, herhalingen: 15 },
+    { nummer: 15, oefening: "Abductor Machine", gewicht: 20, herhalingen: 15 },
+    { nummer: 16, oefening: "Adductor Machine", gewicht: 20, herhalingen: 15 }
+];
+
+const loadExercises = () => {
+    let workoutData = getWorkoutData();
+    if (!workoutData.length) {
+        setWorkoutData(defaultWorkout);
+        workoutData = [...defaultWorkout];
     }
     const tableBody = document.querySelector("#workoutTable tbody");
     tableBody.innerHTML = "";
-
     workoutData.forEach((exercise, index) => {
-        let gewichtInput;
-        if (exercise.nummer == 57 || exercise.nummer == 58) {
-            gewichtInput = `<input type="number" min="0" step="2.5" value="${exercise.gewicht}" onchange="updateExercise(${index}, 'gewicht', this.value)"/> kg`;
-        } else {
-            gewichtInput = `<input type="number" min="0" step="5" value="${exercise.gewicht}" onchange="updateExercise(${index}, 'gewicht', this.value)"/> kg`;
-        }
+        const step = (exercise.nummer == 57 || exercise.nummer == 58) ? 2.5 : 5;
+        const gewichtInput = `<span class="weight-input-wrapper"><input type="number" min="0" step="${step}" value="${exercise.gewicht}" onchange="updateExercise(${index}, 'gewicht', this.value)" /> kg</span>`;
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${exercise.nummer || ''}</td>
@@ -40,51 +44,30 @@ function loadExercises() {
         `;
         tableBody.appendChild(row);
     });
-}
+};
 
-function addExercise() {
-    const workoutData = JSON.parse(localStorage.getItem("workoutLog")) || [];
-    workoutData.push({ nummer: '', oefening: "Nieuwe oefening", gewicht: 0, herhalingen: 0 });
-    localStorage.setItem("workoutLog", JSON.stringify(workoutData));
+const updateExercise = (index, field, value) => {
+    const workoutData = getWorkoutData();
+    workoutData[index][field] = (field === 'gewicht' || field === 'herhalingen') ? Number(value) : value;
+    setWorkoutData(workoutData);
     loadExercises();
-}
+};
 
-function updateExercise(index, field, value) {
-    const workoutData = JSON.parse(localStorage.getItem("workoutLog")) || [];
-    workoutData[index][field] = value;
-    localStorage.setItem("workoutLog", JSON.stringify(workoutData));
-}
+// --- Cardio Table ---
+const getCardioData = () => JSON.parse(localStorage.getItem("cardioLog")) || [];
+const setCardioData = data => localStorage.setItem("cardioLog", JSON.stringify(data));
 
-function exportData() {
-    const workoutData = localStorage.getItem("workoutLog");
-    const blob = new Blob([workoutData], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "workout_log.json";
-    a.click();
-}
+const defaultCardio = [
+    { type: "Cardio", oefening: "Crosstrainer", duur: 10 },
+    { type: "Cardio", oefening: "Fietsen", duur: 10 },
+    { type: "Cardio", oefening: "Loopband", duur: 0 }
+];
 
-function importData() {
-    const file = document.querySelector("#importFile").files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            localStorage.setItem("workoutLog", event.target.result);
-            loadExercises();
-        };
-        reader.readAsText(file);
-    }
-}
-
-function loadCardio() {
-    let cardioData = JSON.parse(localStorage.getItem("cardioLog"));
-    if (!cardioData || cardioData.length === 0) {
-        cardioData = [
-            { type: "Cardio", oefening: "Crosstrainer", duur: 10 },
-            { type: "Cardio", oefening: "Fietsen", duur: 10 },
-            { type: "Cardio", oefening: "Loopband", duur: 0 }
-        ];
-        localStorage.setItem("cardioLog", JSON.stringify(cardioData));
+const loadCardio = () => {
+    let cardioData = getCardioData();
+    if (!cardioData.length) {
+        setCardioData(defaultCardio);
+        cardioData = [...defaultCardio];
     }
     const tableBody = document.querySelector("#cardioTable tbody");
     tableBody.innerHTML = "";
@@ -102,23 +85,30 @@ function loadCardio() {
         `;
         tableBody.appendChild(row);
     });
-}
+};
 
-function updateCardio(index, field, value) {
-    const cardioData = JSON.parse(localStorage.getItem("cardioLog")) || [];
-    cardioData[index][field] = field === 'duur' ? Number(value) : value;
-    localStorage.setItem("cardioLog", JSON.stringify(cardioData));
-}
+const updateCardio = (index, field, value) => {
+    const cardioData = getCardioData();
+    cardioData[index][field] = (field === 'duur') ? Number(value) : value;
+    setCardioData(cardioData);
+    loadCardio();
+};
 
-function loadBuik() {
-    let buikData = JSON.parse(localStorage.getItem("buikLog"));
-    if (!buikData || buikData.length === 0) {
-        buikData = [
-            { oefening: "3x Bovenbuik", herhalingen: 10 },
-            { oefening: "3x Zijkant", herhalingen: 10 },
-            { oefening: "3x Onderbuik", herhalingen: 10 }
-        ];
-        localStorage.setItem("buikLog", JSON.stringify(buikData));
+// --- Buik Table ---
+const getBuikData = () => JSON.parse(localStorage.getItem("buikLog")) || [];
+const setBuikData = data => localStorage.setItem("buikLog", JSON.stringify(data));
+
+const defaultBuik = [
+    { oefening: "3x Bovenbuik", herhalingen: 10 },
+    { oefening: "3x Zijkant", herhalingen: 10 },
+    { oefening: "3x Onderbuik", herhalingen: 10 }
+];
+
+const loadBuik = () => {
+    let buikData = getBuikData();
+    if (!buikData.length) {
+        setBuikData(defaultBuik);
+        buikData = [...defaultBuik];
     }
     const tableBody = document.querySelector("#buikTable tbody");
     tableBody.innerHTML = "";
@@ -130,15 +120,17 @@ function loadBuik() {
         `;
         tableBody.appendChild(row);
     });
-}
+};
 
-function updateBuik(index, value) {
-    const buikData = JSON.parse(localStorage.getItem("buikLog")) || [];
-    buikData[index].herhalingen = value;
-    localStorage.setItem("buikLog", JSON.stringify(buikData));
-}
+const updateBuik = (index, value) => {
+    const buikData = getBuikData();
+    buikData[index].herhalingen = Number(value);
+    setBuikData(buikData);
+    loadBuik();
+};
 
-function clearWorkoutLog() {
+// --- Import/Export/Reset ---
+const clearWorkoutLog = () => {
     if (confirm('Weet je zeker dat je het schema wilt resetten?')) {
         localStorage.removeItem("workoutLog");
         localStorage.removeItem("cardioLog");
@@ -147,4 +139,7 @@ function clearWorkoutLog() {
         loadCardio();
         loadBuik();
     }
-}
+};
+
+// Expose only clearWorkoutLog for button usage
+window.clearWorkoutLog = clearWorkoutLog;

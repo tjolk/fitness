@@ -57,7 +57,7 @@ button {
     font-weight: bold;
 }
 
-input[type="text"], input[type="number"], select {
+input[type="number"], input[type="text"], select {
     font-family: 'Sofia Pro', Arial, sans-serif;
     font-size: 1em;
     padding: 2px 4px;
@@ -66,4 +66,26 @@ input[type="text"], input[type="number"], select {
     width: 60px;
     max-width: 100%;
     box-sizing: border-box;
+}
+
+input[type="number"] {
+    width: 40px;
+    margin-right: 2px;
+}
+
+#cardioTable select {
+    font-size: 1em;
+    padding: 6px 12px;
+    border-radius: 5px;
+    width: 100px;
+}
+
+td:last-child {
+    white-space: nowrap;
+}
+
+.weight-input-wrapper {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
 }
