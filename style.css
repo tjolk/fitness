@@ -1,7 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Ink+Free&display=swap');
 @font-face {
   font-family: 'Sofia Pro';
-  src: local('Sofia Pro'), local('SofiaPro');
+  src: url('fonts/Sofia Pro Regular Az.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ink Free';
+  src: url('fonts/Inkfree.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
   font-display: swap;
 }
 
