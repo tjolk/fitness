@@ -1,48 +1,59 @@
-const schedule = [
-  { day: 'Monday', activity: 'Cardio & Abs' },
-  { day: 'Tuesday', activity: 'Upper Body Strength' },
-  { day: 'Wednesday', activity: 'Yoga or Rest' },
-  { day: 'Thursday', activity: 'Lower Body Strength' },
-  { day: 'Friday', activity: 'HIIT' },
-  { day: 'Saturday', activity: 'Outdoor Activity' },
-  { day: 'Sunday', activity: 'Rest' }
-];
+document.addEventListener("DOMContentLoaded", loadExercises);
 
-const scheduleSection = document.querySelector('.schedule');
+function loadExercises() {
+    const workoutData = JSON.parse(localStorage.getItem("workoutLog")) || [];
+    const tableBody = document.querySelector("#workoutTable tbody");
+    tableBody.innerHTML = "";
 
-schedule.forEach(({ day, activity }) => {
-  const dayDiv = document.createElement('div');
-  dayDiv.className = 'day';
-  dayDiv.innerHTML = `<span class="day-name">${day}</span><span>${activity}</span>`;
-  scheduleSection.appendChild(dayDiv);
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  function makeEditable(selector) {
-    document.querySelectorAll(selector).forEach(function(cell) {
-      cell.addEventListener('click', function() {
-        if (cell.querySelector('input')) return;
-        const currentValue = cell.textContent;
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = currentValue;
-        input.style.width = Math.max(3, currentValue.length) + 'em';
-        cell.textContent = '';
-        cell.appendChild(input);
-        input.focus();
-        input.select();
-        input.addEventListener('blur', function() {
-          cell.textContent = input.value;
-        });
-        input.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === 'Escape') {
-            input.blur();
-          }
-        });
-      });
+    workoutData.forEach((exercise, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><input type="text" value="${exercise.oefening}" onchange="updateExercise(${index}, 'oefening', this.value)"/></td>
+            <td><input type="number" value="${exercise.gewicht}" onchange="updateExercise(${index}, 'gewicht', this.value)"/></td>
+            <td><input type="number" value="${exercise.herhalingen}" onchange="updateExercise(${index}, 'herhalingen', this.value)"/></td>
+            <td><button onclick="deleteExercise(${index})">Verwijderen</button></td>
+        `;
+        tableBody.appendChild(row);
     });
-  }
-  makeEditable('#kracht-table td.editable');
-  makeEditable('#kracht-table td.editable-weight');
-  makeEditable('#kracht-table td:nth-child(4)'); // Herhalingen column
-});
+}
+
+function addExercise() {
+    const workoutData = JSON.parse(localStorage.getItem("workoutLog")) || [];
+    workoutData.push({ oefening: "Nieuwe oefening", gewicht: 0, herhalingen: 0 });
+    localStorage.setItem("workoutLog", JSON.stringify(workoutData));
+    loadExercises();
+}
+
+function updateExercise(index, field, value) {
+    const workoutData = JSON.parse(localStorage.getItem("workoutLog")) || [];
+    workoutData[index][field] = value;
+    localStorage.setItem("workoutLog", JSON.stringify(workoutData));
+}
+
+function deleteExercise(index) {
+    const workoutData = JSON.parse(localStorage.getItem("workoutLog")) || [];
+    workoutData.splice(index, 1);
+    localStorage.setItem("workoutLog", JSON.stringify(workoutData));
+    loadExercises();
+}
+
+function exportData() {
+    const workoutData = localStorage.getItem("workoutLog");
+    const blob = new Blob([workoutData], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "workout_log.json";
+    a.click();
+}
+
+function importData() {
+    const file = document.querySelector("#importFile").files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            localStorage.setItem("workoutLog", event.target.result);
+            loadExercises();
+        };
+        reader.readAsText(file);
+    }
+}
