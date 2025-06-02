@@ -73,6 +73,30 @@ input[type="number"] {
     margin-right: 2px;
 }
 
+/* Native number input styles for mobile wheel */
+.weight-input-wrapper, .herhalingen-input-wrapper, .duur-input-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+}
+input[type='number'] {
+  font-size: 1em;
+  width: 3.5em;
+  padding: 0.2em 0.3em;
+  border-radius: 0.7em;
+  border: 1px solid #ffd500;
+  background: #fffbe6;
+  color: #1c55a4;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  appearance: textfield;
+}
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 #cardioTable select {
     font-size: 1em;
     padding: 6px 12px;
@@ -88,4 +112,84 @@ td:last-child {
     display: inline-flex;
     align-items: center;
     white-space: nowrap;
+}
+
+/* Mobile-friendly stepper styles */
+.stepper-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.stepper-btn {
+  background: #ffd500;
+  color: #1c55a4;
+  border: none;
+  border-radius: 50%;
+  width: 2.2em;
+  height: 2.2em;
+  font-size: 1.5em;
+  font-family: inherit;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.stepper-btn:active {
+  background: #ffe066;
+}
+.stepper-value {
+  min-width: 2.5em;
+  text-align: center;
+  font-size: 1.2em;
+  font-family: inherit;
+  color: #222;
+}
+@media (max-width: 600px) {
+  .stepper-btn {
+    width: 2em;
+    height: 2em;
+    font-size: 1.2em;
+  }
+  .stepper-value {
+    min-width: 2em;
+    font-size: 1em;
+  }
+}
+
+/* Compact number wheel styles for mobile */
+.number-wheel-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+}
+.number-wheel {
+  font-size: 1em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.7em;
+  border: 1px solid #ffd500;
+  background: #fffbe6;
+  color: #1c55a4;
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 3.5em;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.number-wheel-unit {
+  font-size: 1em;
+  color: #222;
+  margin-left: 0.2em;
+}
+@media (max-width: 600px) {
+  .number-wheel {
+    font-size: 1em;
+    min-width: 2.5em;
+    padding: 0.1em 0.2em;
+  }
+  .number-wheel-unit {
+    font-size: 0.95em;
+  }
 }

@@ -24,6 +24,7 @@ const defaultWorkout = [
     { nummer: 16, oefening: "Adductor Machine", gewicht: 20, herhalingen: 15 }
 ];
 
+// Update loadExercises to use native <input type="number"> for all number fields for a native-like wheel experience
 const loadExercises = () => {
     let workoutData = getWorkoutData();
     if (!workoutData.length) {
@@ -34,13 +35,14 @@ const loadExercises = () => {
     tableBody.innerHTML = "";
     workoutData.forEach((exercise, index) => {
         const step = (exercise.nummer == 57 || exercise.nummer == 58) ? 2.5 : 5;
-        const gewichtInput = `<span class="weight-input-wrapper"><input type="number" min="0" step="${step}" value="${exercise.gewicht}" onchange="updateExercise(${index}, 'gewicht', this.value)" /> kg</span>`;
+        const gewichtInput = `<span class='weight-input-wrapper'><input type='number' min='0' max='200' step='${step}' value='${exercise.gewicht}' inputmode='decimal' pattern='[0-9]*' onchange='updateExercise(${index}, "gewicht", this.value)' /> kg</span>`;
+        const herhalingenInput = `<span class='herhalingen-input-wrapper'><input type='number' min='0' max='50' step='1' value='${exercise.herhalingen}' inputmode='numeric' pattern='[0-9]*' onchange='updateExercise(${index}, "herhalingen", this.value)' /> x</span>`;
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${exercise.nummer || ''}</td>
             <td>${exercise.oefening}</td>
             <td>${gewichtInput}</td>
-            <td><input type="number" min="0" value="${exercise.herhalingen}" onchange="updateExercise(${index}, 'herhalingen', this.value)" /> x</td>
+            <td>${herhalingenInput}</td>
         `;
         tableBody.appendChild(row);
     });
@@ -63,6 +65,7 @@ const defaultCardio = [
     { type: "Cardio", oefening: "Loopband", duur: 0 }
 ];
 
+// Update loadCardio to use native <input type="number"> for all number fields for a native-like wheel experience
 const loadCardio = () => {
     let cardioData = getCardioData();
     if (!cardioData.length) {
@@ -72,6 +75,7 @@ const loadCardio = () => {
     const tableBody = document.querySelector("#cardioTable tbody");
     tableBody.innerHTML = "";
     cardioData.forEach((item, index) => {
+        const duurInput = `<span class='duur-input-wrapper'><input type='number' min='0' max='120' step='5' value='${item.duur}' inputmode='numeric' pattern='[0-9]*' onchange='updateCardio(${index}, "duur", this.value)' /> min</span>`;
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>
@@ -81,7 +85,7 @@ const loadCardio = () => {
                 </select>
             </td>
             <td>${item.oefening}</td>
-            <td><input type="number" min="0" step="5" value="${item.duur}" onchange="updateCardio(${index}, 'duur', this.value)"/> min</td>
+            <td>${duurInput}</td>
         `;
         tableBody.appendChild(row);
     });
@@ -104,6 +108,7 @@ const defaultBuik = [
     { oefening: "3x Onderbuik", herhalingen: 10 }
 ];
 
+// Update loadBuik to use native <input type="number"> for all number fields for a native-like wheel experience
 const loadBuik = () => {
     let buikData = getBuikData();
     if (!buikData.length) {
@@ -113,10 +118,11 @@ const loadBuik = () => {
     const tableBody = document.querySelector("#buikTable tbody");
     tableBody.innerHTML = "";
     buikData.forEach((item, index) => {
+        const herhalingenInput = `<span class='herhalingen-input-wrapper'><input type='number' min='0' max='50' step='1' value='${item.herhalingen}' inputmode='numeric' pattern='[0-9]*' onchange='updateBuik(${index}, this.value)' /> x</span>`;
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item.oefening}</td>
-            <td><input type="number" min="0" value="${item.herhalingen}" onchange="updateBuik(${index}, this.value)" /> x</td>
+            <td>${herhalingenInput}</td>
         `;
         tableBody.appendChild(row);
     });
