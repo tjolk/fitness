@@ -34,6 +34,22 @@ table {
     background: #fff;
 }
 
+td, th {
+  text-align: left;
+}
+
+#workoutTable th:nth-child(1), #workoutTable td:nth-child(1) {
+  text-align: right;
+}
+#workoutTable th:nth-child(3), #workoutTable th:nth-child(4),
+#workoutTable td:nth-child(3), #workoutTable td:nth-child(4) {
+  text-align: center;
+}
+#cardioTable th:nth-child(3), #cardioTable td:nth-child(3),
+#buikTable th:nth-child(2), #buikTable td:nth-child(2) {
+  text-align: center;
+}
+
 th, td {
     border: 1px solid #ddd;
     padding: 10px;
@@ -191,5 +207,70 @@ td:last-child {
   }
   .number-wheel-unit {
     font-size: 0.95em;
+  }
+}
+
+.duur-wheel {
+  font-size: 1em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.7em;
+  border: 1px solid #ffd500;
+  background: #fffbe6;
+  color: #1c55a4;
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 5em;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+@media (max-width: 600px) {
+  .duur-wheel {
+    font-size: 1em;
+    min-width: 3.5em;
+    padding: 0.1em 0.2em;
+  }
+}
+
+.herhalingen-wheel {
+  font-size: 1em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.7em;
+  border: 1px solid #ffd500;
+  background: #fffbe6;
+  color: #1c55a4;
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 4em;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  margin-right: 0.2em;
+}
+@media (max-width: 600px) {
+  .herhalingen-wheel {
+    font-size: 1em;
+    min-width: 2.5em;
+    padding: 0.1em 0.2em;
+  }
+}
+
+.gewicht-wheel {
+  font-size: 1em;
+  padding: 0.2em 0.5em;
+  border-radius: 0.7em;
+  border: 1px solid #ffd500;
+  background: #fffbe6;
+  color: #1c55a4;
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 4.5em;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  margin-right: 0.2em;
+}
+@media (max-width: 600px) {
+  .gewicht-wheel {
+    font-size: 1em;
+    min-width: 3em;
+    padding: 0.1em 0.2em;
   }
 }

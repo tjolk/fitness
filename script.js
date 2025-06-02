@@ -34,16 +34,96 @@ const loadExercises = () => {
     const tableBody = document.querySelector("#workoutTable tbody");
     tableBody.innerHTML = "";
     workoutData.forEach((exercise, index) => {
-        const step = (exercise.nummer == 57 || exercise.nummer == 58) ? 2.5 : 5;
-        const gewichtInput = `<span class='weight-input-wrapper'><input type='number' min='0' max='200' step='${step}' value='${exercise.gewicht}' inputmode='decimal' pattern='[0-9]*' onchange='updateExercise(${index}, "gewicht", this.value)' /> kg</span>`;
-        const herhalingenInput = `<span class='herhalingen-input-wrapper'><input type='number' min='0' max='50' step='1' value='${exercise.herhalingen}' inputmode='numeric' pattern='[0-9]*' onchange='updateExercise(${index}, "herhalingen", this.value)' /> x</span>`;
+        // Picker wheel for gewicht: increments of 5, 0-100 (except 57/58 and row 7)
+        const gewichtInput = document.createElement('span');
+        const gewichtSelect = document.createElement('select');
+        gewichtSelect.className = 'gewicht-wheel';
+        if (exercise.nummer == 57 || exercise.nummer == 58) {
+            for (let v = 0; v <= 50; v += 2.5) {
+                // Fix floating point precision for display
+                const displayVal = (Math.round(v * 10) / 10).toFixed(1).replace('.0', '');
+                const option = document.createElement('option');
+                option.value = v;
+                option.textContent = displayVal + ' kg';
+                if (Number(v) === Number(exercise.gewicht)) option.selected = true;
+                gewichtSelect.appendChild(option);
+            }
+        } else if (index === 6) { // row 7 (0-based)
+            for (let v = 0; v <= 100; v += 10) {
+                const option = document.createElement('option');
+                option.value = v;
+                option.textContent = v + ' kg';
+                if (v === exercise.gewicht) option.selected = true;
+                gewichtSelect.appendChild(option);
+            }
+        } else {
+            for (let v = 0; v <= 100; v += 5) {
+                const option = document.createElement('option');
+                option.value = v;
+                option.textContent = v + ' kg';
+                if (v === exercise.gewicht) option.selected = true;
+                gewichtSelect.appendChild(option);
+            }
+        }
+        gewichtSelect.onchange = e => updateExercise(index, 'gewicht', e.target.value);
+        gewichtInput.appendChild(gewichtSelect);
+
+        let herhalingenInput = document.createElement('span');
+        if (index < 6) {
+            // Picker wheel for first 6 rows: increments of 4, 12-32
+            const select = document.createElement('select');
+            select.className = 'herhalingen-wheel';
+            for (let v = 12; v <= 32; v += 4) {
+                const option = document.createElement('option');
+                option.value = v;
+                option.textContent = v + ' x';
+                if (v === exercise.herhalingen) option.selected = true;
+                select.appendChild(option);
+            }
+            select.onchange = e => updateExercise(index, 'herhalingen', e.target.value);
+            herhalingenInput.appendChild(select);
+        } else if (index >= workoutData.length - 4) {
+            // Picker wheel for last 4 rows: increments of 5, 10-25
+            const select = document.createElement('select');
+            select.className = 'herhalingen-wheel';
+            for (let v = 10; v <= 25; v += 5) {
+                const option = document.createElement('option');
+                option.value = v;
+                option.textContent = v + ' x';
+                if (v === exercise.herhalingen) option.selected = true;
+                select.appendChild(option);
+            }
+            select.onchange = e => updateExercise(index, 'herhalingen', e.target.value);
+            herhalingenInput.appendChild(select);
+        } else {
+            // Default input for other rows (as DOM, not string)
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.min = '0';
+            input.max = '50';
+            input.step = '1';
+            input.value = exercise.herhalingen;
+            input.inputMode = 'numeric';
+            input.pattern = '[0-9]*';
+            input.onchange = e => updateExercise(index, 'herhalingen', e.target.value);
+            input.className = 'herhalingen-input';
+            herhalingenInput.className = 'herhalingen-input-wrapper';
+            herhalingenInput.appendChild(input);
+            const unit = document.createElement('span');
+            unit.textContent = ' x';
+            herhalingenInput.appendChild(unit);
+        }
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${exercise.nummer || ''}</td>
             <td>${exercise.oefening}</td>
-            <td>${gewichtInput}</td>
-            <td>${herhalingenInput}</td>
+            <td></td>
+            <td></td>
         `;
+        row.children[2].innerHTML = '';
+        row.children[2].appendChild(gewichtInput);
+        row.children[3].innerHTML = '';
+        row.children[3].appendChild(herhalingenInput);
         tableBody.appendChild(row);
     });
 };
@@ -75,7 +155,17 @@ const loadCardio = () => {
     const tableBody = document.querySelector("#cardioTable tbody");
     tableBody.innerHTML = "";
     cardioData.forEach((item, index) => {
-        const duurInput = `<span class='duur-input-wrapper'><input type='number' min='0' max='120' step='5' value='${item.duur}' inputmode='numeric' pattern='[0-9]*' onchange='updateCardio(${index}, "duur", this.value)' /> min</span>`;
+        // Create a select dropdown for duur (0-60, step 5)
+        const select = document.createElement('select');
+        select.className = 'duur-wheel';
+        for (let v = 0; v <= 60; v += 5) {
+            const option = document.createElement('option');
+            option.value = v;
+            option.textContent = v + ' min';
+            if (v === item.duur) option.selected = true;
+            select.appendChild(option);
+        }
+        select.onchange = e => updateCardio(index, 'duur', e.target.value);
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>
@@ -85,8 +175,9 @@ const loadCardio = () => {
                 </select>
             </td>
             <td>${item.oefening}</td>
-            <td>${duurInput}</td>
+            <td></td>
         `;
+        row.children[2].appendChild(select);
         tableBody.appendChild(row);
     });
 };
@@ -118,12 +209,23 @@ const loadBuik = () => {
     const tableBody = document.querySelector("#buikTable tbody");
     tableBody.innerHTML = "";
     buikData.forEach((item, index) => {
-        const herhalingenInput = `<span class='herhalingen-input-wrapper'><input type='number' min='0' max='50' step='1' value='${item.herhalingen}' inputmode='numeric' pattern='[0-9]*' onchange='updateBuik(${index}, this.value)' /> x</span>`;
+        // Create a select dropdown for herhalingen (6-24, step 2)
+        const select = document.createElement('select');
+        select.className = 'herhalingen-wheel';
+        for (let v = 6; v <= 24; v += 2) {
+            const option = document.createElement('option');
+            option.value = v;
+            option.textContent = v + ' x';
+            if (v === item.herhalingen) option.selected = true;
+            select.appendChild(option);
+        }
+        select.onchange = e => updateBuik(index, e.target.value);
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item.oefening}</td>
-            <td>${herhalingenInput}</td>
+            <td></td>
         `;
+        row.children[1].appendChild(select);
         tableBody.appendChild(row);
     });
 };
