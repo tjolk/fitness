@@ -8,16 +8,16 @@ function loadExercises() {
     let workoutData = JSON.parse(localStorage.getItem("workoutLog"));
     if (!workoutData || workoutData.length === 0) {
         workoutData = [
-            { nummer: 75, oefening: "Chest Press", gewicht: 15, herhalingen: "4x6" },
-            { nummer: 92, oefening: "Lat Machine", gewicht: 20, herhalingen: "4x6" },
-            { nummer: 94, oefening: "Vertical Traction", gewicht: 20, herhalingen: "4x6" },
-            { nummer: 74, oefening: "Shoulder Press", gewicht: 10, herhalingen: "4x6" },
-            { nummer: 58, oefening: "Triceps Press MS", gewicht: 5, herhalingen: "4x6" },
-            { nummer: 57, oefening: "Biceps Curl MS", gewicht: 5, herhalingen: "4x6" },
-            { nummer: 7, oefening: "Horizontal Leg Press", gewicht: 60, herhalingen: "15x" },
-            { nummer: 13, oefening: "Standing Gluteus (stand 4/5)", gewicht: 25, herhalingen: "15x" },
-            { nummer: 15, oefening: "Abductor Machine", gewicht: 20, herhalingen: "15x" },
-            { nummer: 16, oefening: "Adductor Machine", gewicht: 20, herhalingen: "15x" }
+            { nummer: 75, oefening: "Chest Press", gewicht: 15, herhalingen: 24 },
+            { nummer: 92, oefening: "Lat Machine", gewicht: 20, herhalingen: 24 },
+            { nummer: 94, oefening: "Vertical Traction", gewicht: 20, herhalingen: 24 },
+            { nummer: 74, oefening: "Shoulder Press", gewicht: 10, herhalingen: 24 },
+            { nummer: 58, oefening: "Triceps Press MS", gewicht: 5, herhalingen: 24 },
+            { nummer: 57, oefening: "Biceps Curl MS", gewicht: 5, herhalingen: 24 },
+            { nummer: 7, oefening: "Horizontal Leg Press", gewicht: 60, herhalingen: 15 },
+            { nummer: 13, oefening: "Standing Gluteus (stand 4/5)", gewicht: 25, herhalingen: 15 },
+            { nummer: 15, oefening: "Abductor Machine", gewicht: 20, herhalingen: 15 },
+            { nummer: 16, oefening: "Adductor Machine", gewicht: 20, herhalingen: 15 }
         ];
         localStorage.setItem("workoutLog", JSON.stringify(workoutData));
     }
@@ -36,7 +36,7 @@ function loadExercises() {
             <td>${exercise.nummer || ''}</td>
             <td>${exercise.oefening}</td>
             <td>${gewichtInput}</td>
-            <td><input type="text" value="${exercise.herhalingen}" onchange="updateExercise(${index}, 'herhalingen', this.value)"/></td>
+            <td><input type="number" min="0" value="${exercise.herhalingen}" onchange="updateExercise(${index}, 'herhalingen', this.value)" /> x</td>
         `;
         tableBody.appendChild(row);
     });
@@ -114,9 +114,9 @@ function loadBuik() {
     let buikData = JSON.parse(localStorage.getItem("buikLog"));
     if (!buikData || buikData.length === 0) {
         buikData = [
-            { oefening: "3x Bovenbuik", herhalingen: "10x" },
-            { oefening: "3x Zijkant", herhalingen: "10x" },
-            { oefening: "3x Onderbuik", herhalingen: "10x" }
+            { oefening: "3x Bovenbuik", herhalingen: 10 },
+            { oefening: "3x Zijkant", herhalingen: 10 },
+            { oefening: "3x Onderbuik", herhalingen: 10 }
         ];
         localStorage.setItem("buikLog", JSON.stringify(buikData));
     }
@@ -126,7 +126,7 @@ function loadBuik() {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item.oefening}</td>
-            <td><input type="text" value="${item.herhalingen}" onchange="updateBuik(${index}, this.value)" /></td>
+            <td><input type="number" min="0" value="${item.herhalingen}" onchange="updateBuik(${index}, this.value)" /> x</td>
         `;
         tableBody.appendChild(row);
     });
