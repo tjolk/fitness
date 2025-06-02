@@ -1,4 +1,8 @@
-document.addEventListener("DOMContentLoaded", loadExercises);
+document.addEventListener("DOMContentLoaded", function() {
+    loadExercises();
+    loadCardio();
+    loadBuik();
+});
 
 function loadExercises() {
     let workoutData = JSON.parse(localStorage.getItem("workoutLog"));
@@ -21,12 +25,18 @@ function loadExercises() {
     tableBody.innerHTML = "";
 
     workoutData.forEach((exercise, index) => {
+        let gewichtInput;
+        if (exercise.nummer == 57 || exercise.nummer == 58) {
+            gewichtInput = `<input type="number" min="0" step="2.5" value="${exercise.gewicht}" onchange="updateExercise(${index}, 'gewicht', this.value)"/> kg`;
+        } else {
+            gewichtInput = `<input type="number" min="0" step="5" value="${exercise.gewicht}" onchange="updateExercise(${index}, 'gewicht', this.value)"/> kg`;
+        }
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${exercise.nummer || ''}</td>
             <td>${exercise.oefening}</td>
-            <td><input type="number" min="0" step="5" value="${exercise.gewicht}" onchange="updateExercise(${index}, 'gewicht', this.value)"/> kg</td>
-            <td><input type="number" value="${exercise.herhalingen}" onchange="updateExercise(${index}, 'herhalingen', this.value)"/></td>
+            <td>${gewichtInput}</td>
+            <td><input type="text" value="${exercise.herhalingen}" onchange="updateExercise(${index}, 'herhalingen', this.value)"/></td>
         `;
         tableBody.appendChild(row);
     });
@@ -66,7 +76,75 @@ function importData() {
     }
 }
 
+function loadCardio() {
+    let cardioData = JSON.parse(localStorage.getItem("cardioLog"));
+    if (!cardioData || cardioData.length === 0) {
+        cardioData = [
+            { type: "Cardio", oefening: "Crosstrainer", duur: 15 },
+            { type: "Cardio", oefening: "Fietsen", duur: 15 },
+            { type: "Cardio", oefening: "Loopband", duur: 15 }
+        ];
+        localStorage.setItem("cardioLog", JSON.stringify(cardioData));
+    }
+    const tableBody = document.querySelector("#cardioTable tbody");
+    tableBody.innerHTML = "";
+    cardioData.forEach((item, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>
+                <select onchange="updateCardio(${index}, 'type', this.value)">
+                    <option value="Cardio"${item.type === 'Cardio' ? ' selected' : ''}>Cardio</option>
+                    <option value="Fitness"${item.type === 'Fitness' ? ' selected' : ''}>Fitness</option>
+                </select>
+            </td>
+            <td>${item.oefening}</td>
+            <td><input type="number" min="0" step="5" value="${item.duur}" onchange="updateCardio(${index}, 'duur', this.value)"/> min</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+function updateCardio(index, field, value) {
+    const cardioData = JSON.parse(localStorage.getItem("cardioLog")) || [];
+    cardioData[index][field] = field === 'duur' ? Number(value) : value;
+    localStorage.setItem("cardioLog", JSON.stringify(cardioData));
+}
+
+function loadBuik() {
+    let buikData = JSON.parse(localStorage.getItem("buikLog"));
+    if (!buikData || buikData.length === 0) {
+        buikData = [
+            { oefening: "3x Bovenbuik", herhalingen: "10x" },
+            { oefening: "3x Zijkant", herhalingen: "10x" },
+            { oefening: "3x Onderbuik", herhalingen: "10x" }
+        ];
+        localStorage.setItem("buikLog", JSON.stringify(buikData));
+    }
+    const tableBody = document.querySelector("#buikTable tbody");
+    tableBody.innerHTML = "";
+    buikData.forEach((item, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item.oefening}</td>
+            <td><input type="text" value="${item.herhalingen}" onchange="updateBuik(${index}, this.value)" /></td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+function updateBuik(index, value) {
+    const buikData = JSON.parse(localStorage.getItem("buikLog")) || [];
+    buikData[index].herhalingen = value;
+    localStorage.setItem("buikLog", JSON.stringify(buikData));
+}
+
 function clearWorkoutLog() {
-    localStorage.removeItem("workoutLog");
-    loadExercises();
+    if (confirm('Weet je zeker dat je het schema wilt resetten?')) {
+        localStorage.removeItem("workoutLog");
+        localStorage.removeItem("cardioLog");
+        localStorage.removeItem("buikLog");
+        loadExercises();
+        loadCardio();
+        loadBuik();
+    }
 }
