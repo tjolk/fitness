@@ -8,16 +8,16 @@ function loadExercises() {
     let workoutData = JSON.parse(localStorage.getItem("workoutLog"));
     if (!workoutData || workoutData.length === 0) {
         workoutData = [
-            { nummer: 75, oefening: "Chest Press", gewicht: 0, herhalingen: 0 },
-            { nummer: 92, oefening: "Lat Machine", gewicht: 0, herhalingen: 0 },
-            { nummer: 94, oefening: "Vertical Traction", gewicht: 0, herhalingen: 0 },
-            { nummer: 74, oefening: "Shoulder Press", gewicht: 0, herhalingen: 0 },
-            { nummer: 58, oefening: "Triceps Press MS", gewicht: 0, herhalingen: 0 },
-            { nummer: 57, oefening: "Biceps Curl MS", gewicht: 0, herhalingen: 0 },
-            { nummer: 7, oefening: "Horizontal Leg Press", gewicht: 0, herhalingen: 0 },
-            { nummer: 13, oefening: "Standing Gluteus (stand 4/5)", gewicht: 0, herhalingen: 0 },
-            { nummer: 15, oefening: "Abductor Machine", gewicht: 0, herhalingen: 0 },
-            { nummer: 16, oefening: "Adductor Machine", gewicht: 0, herhalingen: 0 }
+            { nummer: 75, oefening: "Chest Press", gewicht: 15, herhalingen: "4x6" },
+            { nummer: 92, oefening: "Lat Machine", gewicht: 20, herhalingen: "4x6" },
+            { nummer: 94, oefening: "Vertical Traction", gewicht: 20, herhalingen: "4x6" },
+            { nummer: 74, oefening: "Shoulder Press", gewicht: 10, herhalingen: "4x6" },
+            { nummer: 58, oefening: "Triceps Press MS", gewicht: 5, herhalingen: "4x6" },
+            { nummer: 57, oefening: "Biceps Curl MS", gewicht: 5, herhalingen: "4x6" },
+            { nummer: 7, oefening: "Horizontal Leg Press", gewicht: 60, herhalingen: "15x" },
+            { nummer: 13, oefening: "Standing Gluteus (stand 4/5)", gewicht: 25, herhalingen: "15x" },
+            { nummer: 15, oefening: "Abductor Machine", gewicht: 20, herhalingen: "15x" },
+            { nummer: 16, oefening: "Adductor Machine", gewicht: 20, herhalingen: "15x" }
         ];
         localStorage.setItem("workoutLog", JSON.stringify(workoutData));
     }
@@ -80,9 +80,9 @@ function loadCardio() {
     let cardioData = JSON.parse(localStorage.getItem("cardioLog"));
     if (!cardioData || cardioData.length === 0) {
         cardioData = [
-            { type: "Cardio", oefening: "Crosstrainer", duur: 15 },
-            { type: "Cardio", oefening: "Fietsen", duur: 15 },
-            { type: "Cardio", oefening: "Loopband", duur: 15 }
+            { type: "Cardio", oefening: "Crosstrainer", duur: 10 },
+            { type: "Cardio", oefening: "Fietsen", duur: 10 },
+            { type: "Cardio", oefening: "Loopband", duur: 0 }
         ];
         localStorage.setItem("cardioLog", JSON.stringify(cardioData));
     }
