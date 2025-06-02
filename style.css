@@ -38,9 +38,23 @@ td, th {
   text-align: left;
 }
 
+/* Center-align all table headers */
+th {
+  text-align: center;
+}
+
+/* Center-align duur and herhalingen columns in all tables */
+#cardioTable th:nth-child(3), #cardioTable td:nth-child(3),
+#workoutTable th:nth-child(4), #workoutTable td:nth-child(4),
+#buikTable th:nth-child(2), #buikTable td:nth-child(2) {
+  text-align: center;
+}
+
+/* Keep # column right-aligned in Krachttraining */
 #workoutTable th:nth-child(1), #workoutTable td:nth-child(1) {
   text-align: right;
 }
+
 #workoutTable th:nth-child(3), #workoutTable th:nth-child(4),
 #workoutTable td:nth-child(3), #workoutTable td:nth-child(4) {
   text-align: center;
