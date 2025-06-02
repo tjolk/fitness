@@ -1,13 +1,13 @@
 @font-face {
   font-family: 'Sofia Pro';
-  src: url('fonts/Sofia Pro Regular Az.woff') format('woff');
+  src: url('./fonts/Sofia Pro Regular Az.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Ink Free';
-  src: url('fonts/Inkfree.ttf') format('truetype');
+  src: url('./fonts/Inkfree.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -16,17 +16,20 @@
 body {
     font-family: 'Sofia Pro', Arial, sans-serif;
     text-align: center;
-    background-color: #1c55a4;
+    background: #1c55a4;
+    color: #fff;
 }
 
 h1, h2, h3, h4, h5, h6, th {
   font-family: 'Ink Free', cursive, sans-serif;
+  color: #fff;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    background: #224e8c;
 }
 
 th, td {
@@ -36,11 +39,25 @@ th, td {
 
 th {
     background-color: #333;
-    color: white;
+    color: #fff;
 }
 
 button {
     margin: 10px;
     padding: 10px;
     cursor: pointer;
+    background: #fff;
+    color: #1c55a4;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Sofia Pro', Arial, sans-serif;
+    font-weight: bold;
+}
+
+input, select {
+    font-family: 'Sofia Pro', Arial, sans-serif;
+    font-size: 1em;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
 }
