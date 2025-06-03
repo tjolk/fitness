@@ -161,7 +161,7 @@ const loadCardio = () => {
         for (let v = 0; v <= 60; v += 5) {
             const option = document.createElement('option');
             option.value = v;
-            option.textContent = ' ' + v + ' min'; // leading space
+            option.textContent = '   ' + v + ' min'; // leading space
             if (Number(v) === Number(item.duur)) option.selected = true;
             select.appendChild(option);
         }
