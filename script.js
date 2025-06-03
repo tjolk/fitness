@@ -42,7 +42,7 @@ const loadExercises = () => {
                 const displayVal = (Math.round(v * 10) / 10).toFixed(1).replace('.0', '');
                 const option = document.createElement('option');
                 option.value = v;
-                option.textContent = displayVal + ' kg';
+                option.textContent = ' ' + displayVal + ' kg'; // leading space
                 if (Number(v) === Number(exercise.gewicht)) option.selected = true;
                 gewichtSelect.appendChild(option);
             }
@@ -50,7 +50,7 @@ const loadExercises = () => {
             for (let v = 0; v <= 100; v += 10) {
                 const option = document.createElement('option');
                 option.value = v;
-                option.textContent = v + ' kg';
+                option.textContent = ' ' + v + ' kg'; // leading space
                 if (v === exercise.gewicht) option.selected = true;
                 gewichtSelect.appendChild(option);
             }
@@ -58,7 +58,7 @@ const loadExercises = () => {
             for (let v = 0; v <= 100; v += 5) {
                 const option = document.createElement('option');
                 option.value = v;
-                option.textContent = v + ' kg';
+                option.textContent = ' ' + v + ' kg'; // leading space
                 if (v === exercise.gewicht) option.selected = true;
                 gewichtSelect.appendChild(option);
             }
@@ -74,7 +74,7 @@ const loadExercises = () => {
             for (let v = 12; v <= 32; v += 4) {
                 const option = document.createElement('option');
                 option.value = v;
-                option.textContent = v + 'x';
+                option.textContent = ' ' + v + 'x'; // leading space
                 if (v === exercise.herhalingen) option.selected = true;
                 select.appendChild(option);
             }
@@ -86,7 +86,7 @@ const loadExercises = () => {
             for (let v = 10; v <= 25; v += 5) {
                 const option = document.createElement('option');
                 option.value = v;
-                option.textContent = v + 'x';
+                option.textContent = ' ' + v + 'x'; // leading space
                 if (v === exercise.herhalingen) option.selected = true;
                 select.appendChild(option);
             }
@@ -161,7 +161,7 @@ const loadCardio = () => {
         for (let v = 0; v <= 60; v += 5) {
             const option = document.createElement('option');
             option.value = v;
-            option.textContent = v + ' min';
+            option.textContent = ' ' + v + ' min'; // leading space
             if (Number(v) === Number(item.duur)) option.selected = true;
             select.appendChild(option);
         }
@@ -175,7 +175,7 @@ const loadCardio = () => {
         ["Cardio", "Fitness"].forEach(val => {
             const opt = document.createElement('option');
             opt.value = val;
-            opt.textContent = val;
+            opt.textContent = ' ' + val; // leading space
             if (item.type === val) opt.selected = true;
             typeSelect.appendChild(opt);
         });
@@ -225,7 +225,7 @@ const loadBuik = () => {
         for (let v = 6; v <= 24; v += 2) {
             const option = document.createElement('option');
             option.value = v;
-            option.textContent = v + 'x';
+            option.textContent = ' ' + v + 'x'; // leading space
             if (v === item.herhalingen) option.selected = true;
             select.appendChild(option);
         }
