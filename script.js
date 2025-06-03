@@ -166,7 +166,11 @@ const loadCardio = () => {
             select.appendChild(option);
         }
         select.onchange = e => updateCardio(index, 'duur', e.target.value);
-        selectWrapper.appendChild(select);
+        // In all JS where you create a picker (select), wrap it in a .picker-center-wrapper for centering
+        const pickerCenter = document.createElement('span');
+        pickerCenter.className = 'picker-center-wrapper';
+        pickerCenter.appendChild(select);
+        selectWrapper.appendChild(pickerCenter);
         // Build row with empty cell for duur, then append select wrapper
         const row = document.createElement("tr");
         const typeCell = document.createElement('td');
@@ -230,7 +234,11 @@ const loadBuik = () => {
             select.appendChild(option);
         }
         select.onchange = e => updateBuik(index, e.target.value);
-        selectWrapper.appendChild(select);
+        // In all JS where you create a picker (select), wrap it in a .picker-center-wrapper for centering
+        const pickerCenter = document.createElement('span');
+        pickerCenter.className = 'picker-center-wrapper';
+        pickerCenter.appendChild(select);
+        selectWrapper.appendChild(pickerCenter);
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item.oefening}</td>
