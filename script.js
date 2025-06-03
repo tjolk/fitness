@@ -74,7 +74,7 @@ const loadExercises = () => {
             for (let v = 12; v <= 32; v += 4) {
                 const option = document.createElement('option');
                 option.value = v;
-                option.textContent = v + ' x';
+                option.textContent = v + 'x';
                 if (v === exercise.herhalingen) option.selected = true;
                 select.appendChild(option);
             }
@@ -86,7 +86,7 @@ const loadExercises = () => {
             for (let v = 10; v <= 25; v += 5) {
                 const option = document.createElement('option');
                 option.value = v;
-                option.textContent = v + ' x';
+                option.textContent = v + 'x';
                 if (v === exercise.herhalingen) option.selected = true;
                 select.appendChild(option);
             }
@@ -106,7 +106,7 @@ const loadExercises = () => {
             herhalingenInput.className = 'herhalingen-input-wrapper';
             herhalingenInput.appendChild(input);
             const unit = document.createElement('span');
-            unit.textContent = ' x';
+            unit.textContent = 'x';
             herhalingenInput.appendChild(unit);
         }
 
@@ -143,62 +143,6 @@ const defaultCardio = [
     { type: "Cardio", oefening: "Loopband", duur: 0 }
 ];
 
-// === Custom Picker ===
-class CustomPicker {
-    constructor({options, value, onChange, unit = '', className = ''}) {
-        this.options = options;
-        this.value = value;
-        this.onChange = onChange;
-        this.unit = unit;
-        this.className = className;
-        this.root = this.render();
-    }
-    render() {
-        const wrapper = document.createElement('span');
-        wrapper.className = 'custom-picker-wrapper ' + this.className;
-        // Displayed value
-        const display = document.createElement('button');
-        display.type = 'button';
-        display.className = 'custom-picker-display';
-        display.textContent = this.getDisplayText(this.value);
-        display.onclick = () => this.openPicker();
-        wrapper.appendChild(display);
-        this.display = display;
-        return wrapper;
-    }
-    getDisplayText(val) {
-        const opt = this.options.find(o => o.value == val);
-        return opt ? opt.label : val + (this.unit ? ' ' + this.unit : '');
-    }
-    openPicker() {
-        // Modal overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'custom-picker-overlay';
-        // Picker box
-        const box = document.createElement('div');
-        box.className = 'custom-picker-box';
-        // Option list
-        this.options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'custom-picker-option' + (opt.value == this.value ? ' selected' : '');
-            btn.textContent = opt.label;
-            btn.onclick = () => {
-                this.value = opt.value;
-                this.display.textContent = this.getDisplayText(opt.value);
-                document.body.removeChild(overlay);
-                if (this.onChange) this.onChange(opt.value);
-            };
-            box.appendChild(btn);
-        });
-        overlay.onclick = e => {
-            if (e.target === overlay) document.body.removeChild(overlay);
-        };
-        overlay.appendChild(box);
-        document.body.appendChild(overlay);
-    }
-}
-
 // --- Cardio Table with Custom Picker ---
 const loadCardio = () => {
     let cardioData = getCardioData();
@@ -209,17 +153,17 @@ const loadCardio = () => {
     const tableBody = document.querySelector("#cardioTable tbody");
     tableBody.innerHTML = "";
     cardioData.forEach((item, index) => {
-        // Custom picker for duur (0-60, step 5)
-        const options = [];
+        // Native select for duur (0-60, step 5)
+        const select = document.createElement('select');
+        select.className = 'duur-wheel';
         for (let v = 0; v <= 60; v += 5) {
-            options.push({ value: v, label: v + ' min' });
+            const option = document.createElement('option');
+            option.value = v;
+            option.textContent = v + ' min';
+            if (v === item.duur) option.selected = true;
+            select.appendChild(option);
         }
-        const picker = new CustomPicker({
-            options,
-            value: item.duur,
-            onChange: val => updateCardio(index, 'duur', val),
-            className: 'duur-wheel'
-        });
+        select.onchange = e => updateCardio(index, 'duur', e.target.value);
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>
@@ -231,7 +175,7 @@ const loadCardio = () => {
             <td>${item.oefening}</td>
             <td></td>
         `;
-        row.children[2].appendChild(picker.root);
+        row.children[2].appendChild(select);
         tableBody.appendChild(row);
     });
 };
@@ -267,7 +211,7 @@ const loadBuik = () => {
         for (let v = 6; v <= 24; v += 2) {
             const option = document.createElement('option');
             option.value = v;
-            option.textContent = v + ' x';
+            option.textContent = v + 'x';
             if (v === item.herhalingen) option.selected = true;
             select.appendChild(option);
         }
