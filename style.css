@@ -93,15 +93,16 @@ button {
 input[type="number"], input[type="text"], select {
   font-family: 'Sofia Pro', Arial, sans-serif;
   font-size: 1em;
-  padding: 0.2em 0.5em;
+  padding: 0em 0em;
   width: 3.5em;
   max-width: 100%;
   box-sizing: border-box;
   appearance: none;
   background: #fffbe6;
-  border: 0px solid #ffd500;
+  border: none;
   color: #1c55a4;
   -webkit-appearance: none;
+  -moz-appearance: none;
   text-align: center;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
@@ -116,7 +117,7 @@ input[type='number']::-webkit-outer-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 4em;
+  width: 4.5em;
   height: 100%;
   border: 1px solid #ffd500;
   border-radius: 0.7em;
@@ -141,6 +142,12 @@ input[type='number']::-webkit-outer-spin-button {
   width: 100%;
   min-width: 4em;
   margin: 0;
+}
+
+.cardio-type-select:focus {
+  outline: none;
+  border: 1px solid #ffd500;
+  box-shadow: 0 0 0 0px #ffd500;
 }
 
 @media (max-width: 600px) {
