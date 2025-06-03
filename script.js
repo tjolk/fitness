@@ -164,18 +164,26 @@ const loadCardio = () => {
             select.appendChild(option);
         }
         select.onchange = e => updateCardio(index, 'duur', e.target.value);
+        // Build row with empty cell for duur, then append select
         const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>
-                <select onchange="updateCardio(${index}, 'type', this.value)">
-                    <option value="Cardio"${item.type === 'Cardio' ? ' selected' : ''}>Cardio</option>
-                    <option value="Fitness"${item.type === 'Fitness' ? ' selected' : ''}>Fitness</option>
-                </select>
-            </td>
-            <td>${item.oefening}</td>
-            <td></td>
-        `;
-        row.children[2].appendChild(select);
+        const typeCell = document.createElement('td');
+        const typeSelect = document.createElement('select');
+        typeSelect.onchange = e => updateCardio(index, 'type', e.target.value);
+        ["Cardio", "Fitness"].forEach(val => {
+            const opt = document.createElement('option');
+            opt.value = val;
+            opt.textContent = val;
+            if (item.type === val) opt.selected = true;
+            typeSelect.appendChild(opt);
+        });
+        typeCell.appendChild(typeSelect);
+        const oefeningCell = document.createElement('td');
+        oefeningCell.textContent = item.oefening;
+        const duurCell = document.createElement('td');
+        duurCell.appendChild(select);
+        row.appendChild(typeCell);
+        row.appendChild(oefeningCell);
+        row.appendChild(duurCell);
         tableBody.appendChild(row);
     });
 };
