@@ -153,7 +153,9 @@ const loadCardio = () => {
     const tableBody = document.querySelector("#cardioTable tbody");
     tableBody.innerHTML = "";
     cardioData.forEach((item, index) => {
-        // Native select for duur (0-60, step 5)
+        // Add a span wrapper for the select
+        const selectWrapper = document.createElement('span');
+        selectWrapper.className = 'duur-input-wrapper';
         const select = document.createElement('select');
         select.className = 'duur-wheel';
         for (let v = 0; v <= 60; v += 5) {
@@ -164,7 +166,8 @@ const loadCardio = () => {
             select.appendChild(option);
         }
         select.onchange = e => updateCardio(index, 'duur', e.target.value);
-        // Build row with empty cell for duur, then append select
+        selectWrapper.appendChild(select);
+        // Build row with empty cell for duur, then append select wrapper
         const row = document.createElement("tr");
         const typeCell = document.createElement('td');
         const typeSelect = document.createElement('select');
@@ -180,7 +183,7 @@ const loadCardio = () => {
         const oefeningCell = document.createElement('td');
         oefeningCell.textContent = item.oefening;
         const duurCell = document.createElement('td');
-        duurCell.appendChild(select);
+        duurCell.appendChild(selectWrapper);
         row.appendChild(typeCell);
         row.appendChild(oefeningCell);
         row.appendChild(duurCell);
@@ -214,6 +217,9 @@ const loadBuik = () => {
     const tableBody = document.querySelector("#buikTable tbody");
     tableBody.innerHTML = "";
     buikData.forEach((item, index) => {
+        // Add a span wrapper for the select
+        const selectWrapper = document.createElement('span');
+        selectWrapper.className = 'herhalingen-input-wrapper';
         const select = document.createElement('select');
         select.className = 'herhalingen-wheel';
         for (let v = 6; v <= 24; v += 2) {
@@ -224,12 +230,13 @@ const loadBuik = () => {
             select.appendChild(option);
         }
         select.onchange = e => updateBuik(index, e.target.value);
+        selectWrapper.appendChild(select);
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item.oefening}</td>
             <td></td>
         `;
-        row.children[1].appendChild(select);
+        row.children[1].appendChild(selectWrapper);
         tableBody.appendChild(row);
     });
 };
@@ -243,7 +250,7 @@ const updateBuik = (index, value) => {
 
 // --- Import/Export/Reset ---
 const clearWorkoutLog = () => {
-    if (confirm('Weet je zeker dat je het schema wilt resetten?')) {
+    if (confirm('Weet je zeker dat je het schema wilt terugzetten?')) {
         localStorage.removeItem("workoutLog");
         localStorage.removeItem("cardioLog");
         localStorage.removeItem("buikLog");
