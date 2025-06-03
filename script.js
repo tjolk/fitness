@@ -160,7 +160,7 @@ const loadCardio = () => {
             const option = document.createElement('option');
             option.value = v;
             option.textContent = v + ' min';
-            if (v === item.duur) option.selected = true;
+            if (Number(v) === Number(item.duur)) option.selected = true;
             select.appendChild(option);
         }
         select.onchange = e => updateCardio(index, 'duur', e.target.value);
