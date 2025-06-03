@@ -43,7 +43,6 @@ th, td {
   padding: 10px;
 }
 
-/* Header and Column Alignment */
 th {
   background-color: #ffd500;
   color: #fff;
@@ -51,27 +50,31 @@ th {
   text-align: center;
   font-weight: bold !important;
 }
-td, th {
+
+td {
   text-align: left;
 }
-/* Center-align picker columns */
-#cardioTable th:nth-child(3), #cardioTable td:nth-child(3),
-#workoutTable th:nth-child(4), #workoutTable td:nth-child(4),
-#buikTable th:nth-child(2), #buikTable td:nth-child(2) {
+
+#cardioTable td:nth-child(3),
+#workoutTable td:nth-child(3), #workoutTable td:nth-child(4), 
+#buikTable td:nth-child(2) {
   text-align: center;
 }
-/* Right-align # column in Krachttraining */
-#workoutTable th:nth-child(1), #workoutTable td:nth-child(1) {
+#workoutTable td:nth-child(1) {
   text-align: right;
-}
-/* Center-align gewicht/herhalingen in Krachttraining */
-#workoutTable th:nth-child(3), #workoutTable th:nth-child(4),
-#workoutTable td:nth-child(3), #workoutTable td:nth-child(4) {
-  text-align: center;
 }
 
 td:last-child {
   white-space: nowrap;
+}
+
+/* Center .picker-center-wrapper horizontally in table cells */
+td > .picker-center-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* === Button Styles === */
@@ -91,14 +94,13 @@ input[type="number"], input[type="text"], select {
   font-family: 'Sofia Pro', Arial, sans-serif;
   font-size: 1em;
   padding: 0.2em 0.5em;
-  border-radius: 0.7em;
-  border: 1px solid #ffd500;
-  background: #fffbe6;
-  color: #1c55a4;
-  width: auto;
+  width: 3.5em;
   max-width: 100%;
   box-sizing: border-box;
   appearance: none;
+  background: #fffbe6;
+  border: 0px solid #ffd500;
+  color: #1c55a4;
   -webkit-appearance: none;
   text-align: center;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
@@ -110,17 +112,20 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
-/* Picker wheel wrappers */
-.weight-input-wrapper, .herhalingen-input-wrapper, .duur-input-wrapper,
-.number-wheel-wrapper {
-  display: inline-flex;
+.picker-center-wrapper {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 0.2em;
-  white-space: nowrap;
-}
+  width: 4em;
+  height: 100%;
+  border: 1px solid #ffd500;
+  border-radius: 0.7em;
+  background: #fffbe6;
+  color: #1c55a4;
+ }
 
-/* Unified select (picker wheel) styles */
-select, .number-wheel, .herhalingen-wheel, .gewicht-wheel, .duur-wheel {
+/* Cardio/Fitness type picker specific styles */
+.cardio-type-select {
   font-family: 'Sofia Pro', Arial, sans-serif;
   font-size: 1em;
   padding: 0.2em 0.5em;
@@ -130,54 +135,38 @@ select, .number-wheel, .herhalingen-wheel, .gewicht-wheel, .duur-wheel {
   color: #1c55a4;
   appearance: none;
   -webkit-appearance: none;
-  text-align: center;
+  text-align: left;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   width: 100%;
   min-width: 4em;
   margin: 0;
 }
 
-/* Remove specific min-widths unless functionally needed */
-.gewicht-wheel { min-width: 4em; }
-
-/* Center picker in a flex container and make it transparent for iOS-like look */
-.picker-center-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-/* Remove padding-left from options for true centering */
-select option, .number-wheel option, .herhalingen-wheel option, .gewicht-wheel option {
-  padding-left: 0;
-}
-
-/* CardioTable select width for alignment */
-#cardioTable select.duur-wheel, #cardioTable select:not(.duur-wheel) {
-  width: 100%;
-}
-
-/* Picker wheel unit label */
-.number-wheel-unit {
-  font-size: 1em;
-  color: #222;
-  margin-left: 0.2em;
-}
-
 @media (max-width: 600px) {
-  select, .number-wheel, .herhalingen-wheel, .gewicht-wheel {
+  .picker-center-wrapper select,
+  .picker-center-wrapper .number-wheel,
+  .picker-center-wrapper .herhalingen-wheel,
+  .picker-center-wrapper .gewicht-wheel {
     font-size: 1em;
     min-width: 2.5em;
     padding: 0.1em 0.2em;
   }
-  .duur-wheel {
+  .picker-center-wrapper .duur-wheel {
     font-size: 1em;
     padding: 0em 0em;
   }
   .number-wheel-unit {
     font-size: 0.95em;
+  }
+  .picker-center-wrapper .cardio-type-select {
+    font-size: 1em;
+    min-width: 2.5em;
+    padding: 0.1em 0.2em;
+  }
+  .cardio-type-select {
+    font-size: 1em;
+    min-width: 2.5em;
+    padding: 0.1em 0.2em;
   }
 }
 
@@ -228,7 +217,11 @@ select option, .number-wheel option, .herhalingen-wheel option, .gewicht-wheel o
     min-width: 2em;
     font-size: 1em;
   }
-  .weight-input-wrapper, .herhalingen-input-wrapper, .duur-input-wrapper, .number-wheel-wrapper {
-    gap: 0.1em;
-  }
+}
+
+/* === Focus Styles === */
+input[type="number"]:focus, input[type="text"]:focus, select:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
 }
