@@ -36,32 +36,21 @@ const loadExercises = () => {
         // Gewicht picker
         const gewichtSelect = document.createElement('select');
         gewichtSelect.className = 'gewicht-wheel';
+        let gewichtOptions = [];
         if (exercise.nummer == 57 || exercise.nummer == 58) {
-            for (let v = 0; v <= 50; v += 2.5) {
-                const displayVal = (Math.round(v * 10) / 10).toFixed(1).replace('.0', '');
-                const option = document.createElement('option');
-                option.value = v;
-                option.textContent = displayVal + ' kg';
-                if (Number(v) === Number(exercise.gewicht)) option.selected = true;
-                gewichtSelect.appendChild(option);
-            }
+            gewichtOptions = Array.from({length: 21}, (_, i) => (i * 2.5));
         } else if (index === 6) {
-            for (let v = 0; v <= 100; v += 10) {
-                const option = document.createElement('option');
-                option.value = v;
-                option.textContent = v + ' kg';
-                if (v === exercise.gewicht) option.selected = true;
-                gewichtSelect.appendChild(option);
-            }
+            gewichtOptions = Array.from({length: 11}, (_, i) => (i * 10));
         } else {
-            for (let v = 0; v <= 100; v += 5) {
-                const option = document.createElement('option');
-                option.value = v;
-                option.textContent = v + ' kg';
-                if (v === exercise.gewicht) option.selected = true;
-                gewichtSelect.appendChild(option);
-            }
+            gewichtOptions = Array.from({length: 21}, (_, i) => (i * 5));
         }
+        gewichtOptions.forEach(v => {
+            const option = document.createElement('option');
+            option.value = v;
+            option.textContent = (Math.round(v * 10) / 10).toFixed(1).replace('.0', '') + ' kg';
+            if (Number(v) === Number(exercise.gewicht)) option.selected = true;
+            gewichtSelect.appendChild(option);
+        });
         gewichtSelect.onchange = e => updateExercise(index, 'gewicht', e.target.value);
         const gewichtCenter = document.createElement('span');
         gewichtCenter.className = 'picker-center-wrapper';
@@ -72,13 +61,13 @@ const loadExercises = () => {
         if (index < 6) {
             const select = document.createElement('select');
             select.className = 'herhalingen-wheel';
-            for (let v = 12; v <= 32; v += 4) {
+            [12, 16, 20, 24, 28, 32].forEach(v => {
                 const option = document.createElement('option');
                 option.value = v;
                 option.textContent = v + 'x';
                 if (v === exercise.herhalingen) option.selected = true;
                 select.appendChild(option);
-            }
+            });
             select.onchange = e => updateExercise(index, 'herhalingen', e.target.value);
             herhalingenCenter = document.createElement('span');
             herhalingenCenter.className = 'picker-center-wrapper';
@@ -86,13 +75,13 @@ const loadExercises = () => {
         } else if (index >= workoutData.length - 4) {
             const select = document.createElement('select');
             select.className = 'herhalingen-wheel';
-            for (let v = 10; v <= 25; v += 5) {
+            [10, 15, 20, 25].forEach(v => {
                 const option = document.createElement('option');
                 option.value = v;
                 option.textContent = v + 'x';
                 if (v === exercise.herhalingen) option.selected = true;
                 select.appendChild(option);
-            }
+            });
             select.onchange = e => updateExercise(index, 'herhalingen', e.target.value);
             herhalingenCenter = document.createElement('span');
             herhalingenCenter.className = 'picker-center-wrapper';
