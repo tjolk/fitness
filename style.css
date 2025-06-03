@@ -120,7 +120,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 /* Unified select (picker wheel) styles */
-select, .number-wheel, .herhalingen-wheel, .gewicht-wheel {
+select, .number-wheel, .herhalingen-wheel, .gewicht-wheel, .duur-wheel {
   font-family: 'Sofia Pro', Arial, sans-serif;
   font-size: 1em;
   padding: 0.2em 0.5em;
@@ -132,15 +132,32 @@ select, .number-wheel, .herhalingen-wheel, .gewicht-wheel {
   -webkit-appearance: none;
   text-align: center;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  width: 100%;
   min-width: 4em;
-  margin-right: 0.2em;
+  margin: 0;
 }
 
 /* Remove specific min-widths unless functionally needed */
 .gewicht-wheel { min-width: 4em; }
 
+/* Center picker in a flex container and make it transparent for iOS-like look */
+.picker-center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Remove padding-left from options for true centering */
+select option, .number-wheel option, .herhalingen-wheel option, .gewicht-wheel option {
+  padding-left: 0;
+}
+
 /* CardioTable select width for alignment */
-#cardioTable select { width: 100px; }
+#cardioTable select.duur-wheel, #cardioTable select:not(.duur-wheel) {
+  width: 100%;
+}
 
 /* Picker wheel unit label */
 .number-wheel-unit {
@@ -214,8 +231,4 @@ select, .number-wheel, .herhalingen-wheel, .gewicht-wheel {
   .weight-input-wrapper, .herhalingen-input-wrapper, .duur-input-wrapper, .number-wheel-wrapper {
     gap: 0.1em;
   }
-}
-
-select option, .number-wheel option, .herhalingen-wheel option, .gewicht-wheel option {
-  padding-left: 0.7em;
 }
