@@ -128,7 +128,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 /* Unified select (picker wheel) styles */
-select, .number-wheel, .duur-wheel, .herhalingen-wheel, .gewicht-wheel {
+select, .number-wheel, .herhalingen-wheel, .gewicht-wheel {
   font-size: 1em;
   padding: 0.2em 0.5em;
   border-radius: 0.7em;
@@ -144,7 +144,6 @@ select, .number-wheel, .duur-wheel, .herhalingen-wheel, .gewicht-wheel {
 /* Specific min-widths for different wheels */
 .number-wheel, .herhalingen-wheel { min-width: 4em; }
 .gewicht-wheel { min-width: 4.5em; margin-right: 0.2em; }
-.duur-wheel { min-width: 5em; }
 
 /* CardioTable select width */
 #cardioTable select { width: 100px; }
@@ -191,10 +190,6 @@ select, .number-wheel, .duur-wheel, .herhalingen-wheel, .gewicht-wheel {
 }
 
 /* === Custom Picker Styles === */
-.custom-picker-wrapper {
-  display: inline-block;
-  position: relative;
-}
 .custom-picker-display {
   font-family: 'Sofia Pro', Arial, sans-serif;
   font-size: 1em;
@@ -230,6 +225,9 @@ select, .number-wheel, .duur-wheel, .herhalingen-wheel, .gewicht-wheel {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 60vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .custom-picker-option {
   font-family: 'Sofia Pro', Arial, sans-serif;
@@ -267,8 +265,7 @@ select, .number-wheel, .duur-wheel, .herhalingen-wheel, .gewicht-wheel {
   }
   .duur-wheel {
     font-size: 1em;
-    min-width: 3.5em;
-    padding: 0.1em 0.2em;
+    padding: 0em 0em;
   }
   .number-wheel-unit {
     font-size: 0.95em;
@@ -276,6 +273,9 @@ select, .number-wheel, .duur-wheel, .herhalingen-wheel, .gewicht-wheel {
   .custom-picker-box {
     min-width: 120px;
     padding: 0.5em 0.2em;
+    max-height: 50vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .custom-picker-option {
     font-size: 1em;
