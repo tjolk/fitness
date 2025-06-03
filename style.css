@@ -215,3 +215,7 @@ select, .number-wheel, .herhalingen-wheel, .gewicht-wheel {
     gap: 0.1em;
   }
 }
+
+select option, .number-wheel option, .herhalingen-wheel option, .gewicht-wheel option {
+  padding-left: 0.7em;
+}
